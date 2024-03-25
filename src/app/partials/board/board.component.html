@@ -1,0 +1,16 @@
+<div class="board">
+  @for (boardSquare of game.board; track $index) {
+  <div class="board-square" [class]="boardSquare.typeSquare"></div>
+  } @for (piece of game.players; track $index) {
+  <div
+    [style]="{
+      'background-color': piece.pieceColor,
+      left: piece.positionX + 'px',
+      top: piece.positionY + 'px'
+    }"
+    class="player-piece"
+  >
+    {{ $index }}
+  </div>
+  }
+</div>

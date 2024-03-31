@@ -10,6 +10,7 @@ export interface Settings {
 
 export interface BoardSquare {
   typeSquare: String; // Normales - AvantZen - BatallZen - RetroZen SuertZen
+  function: Function;
 }
 
 export interface Game {
@@ -21,7 +22,7 @@ export interface Game {
 
 export interface Player {
   IA: Boolean;
-  nickName: String;
+  nickName: string;
   pieceColor: string;
   squardPosition: number;
   positionX: number;
@@ -33,4 +34,43 @@ export interface HTML_Squard {
   y: number;
   width: number;
   height: number;
+}
+
+export interface Functions {
+  TipoBatalla: {
+    Dados: Function;
+    Bully: Function;
+    Trivial: Function;
+  };
+  TipoSuertZen: {
+    Ruleta: Function;
+    DadoExtra: Function;
+    TurnoExtra: Function;
+  };
+  TipoRetroZen: {
+    Ruleta: Function;
+    DadoExtra: Function;
+    TurnoExtra: Function;
+  };
+  TipoAvantZen: {
+    Ruleta: Function;
+    DadoExtra: Function;
+    TurnoExtra: Function;
+  };
+}
+
+export interface SpecialTurn {
+  active: boolean;
+  title: string;
+  description: string;
+}
+
+export interface Versus {
+  nickName: string;
+  result: number;
+}
+
+export interface Config {
+  settings: Settings;
+  players: Player[];
 }

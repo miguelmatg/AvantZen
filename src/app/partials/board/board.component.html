@@ -1,0 +1,149 @@
+<div class="board">
+  @for (boardSquare of game.board; track $index) {
+  <div class="board-square" [class]="boardSquare.typeSquare"></div>
+  } @for (piece of game.players; track $index) {
+  <div
+    [ngStyle]="{
+      'background-color': piece.pieceColor + 'CC',
+      'border-color': piece.pieceColor,
+      transition: transitionTime + 's',
+      left: piece.positionX + 'px',
+      top: piece.positionY + 'px'
+    }"
+    class="player-piece"
+    [class]="
+      piece.nickName === currentPlayer.nickName && !movingPiece ? 'onTurn' : ''
+    "
+  ></div>
+  }
+</div>
+
+<div id="countdown-container">
+  <span class="startingGameTitle">El juego comienza en...</span>
+  <span class="countdown">
+    {{ startTime }}
+  </span>
+</div>
+
+<dialog close id="your-turn" class="turn-dialog">
+  <div>
+    ¡Es el turno de <b>{{ currentPlayer.nickName }}</b>
+  </div>
+  @if(specialTurn.active){
+
+  <div>
+    <div class="title">{{ specialTurn.title }}</div>
+    <div class="description">{{ specialTurn.description }}</div>
+    <div class="continue">
+      <button (click)="specialTurn.active = false">Continuar</button>
+    </div>
+  </div>
+  }@else{
+  <div>
+    <app-dice-roller (eventRoll)="setResult($event)"></app-dice-roller>
+  </div>
+  }
+</dialog>
+
+<dialog close [id]="'dialog_' + TypeSquare.RetroZen" class="turn-dialog">
+  <div class="title">{{ specialTurn.title }}</div>
+  <div class="description">{{ specialTurn.description }}</div>
+  <div class="continue">
+    <app-dice-roller (eventRoll)="setResultRetroZen($event)"></app-dice-roller>
+  </div>
+</dialog>
+
+<dialog close [id]="'dialog_' + TypeSquare.BatallZen" class="turn-dialog">
+  <div class="title">{{ specialTurn.title }}</div>
+  <div class="description">{{ specialTurn.description }}</div>
+  <div class="continue">
+    @if(!inBattle){
+    <ul>
+      @for (player of game.players; track $index) { @if(player.nickName !==
+      currentPlayer.nickName){
+      <li (click)="selectOpponent(player.nickName)">{{ player.nickName }}</li>
+      } }
+    </ul>
+    } @if(versus.length > 1){
+    <div class="versus-container">
+      <div class="opponent">
+        <h2>{{ versus[0].nickName }}</h2>
+        @if(inBattle && battleTurn === 0 && versus[0].result === 0){
+        <app-dice-roller
+          (eventRoll)="setResultVersus($event, 0)"
+        ></app-dice-roller>
+        }@else if(versus[0].result > 0){
+        <span>{{ versus[0].result }}</span>
+        }
+      </div>
+      <div class="versus">
+        <h1>VS</h1>
+      </div>
+      <div class="opponent">
+        <h2>{{ versus[1].nickName }}</h2>
+        @if(inBattle && battleTurn === 1 && versus[1].result === 0){
+        <app-dice-roller
+          (eventRoll)="setResultVersus($event, 1)"
+        ></app-dice-roller>
+        }@else if(versus[1].result > 1){
+        <span>{{ versus[1].result }}</span>
+        }
+      </div>
+    </div>
+    }
+
+    <div class="continue">
+      <button (click)="inBattle = true" [disabled]="versus.length != 2">
+        Comenzar Batalla
+      </button>
+    </div>
+
+    <!-- <app-dice-roller (eventRoll)="setResultRetroZen($event)"></app-dice-roller> -->
+  </div>
+</dialog>
+
+<dialog close [id]="'dialog_' + TypeSquare.Finish" class="turn-dialog">
+  <div class="title">{{ specialTurn.title }}</div>
+  <div class="description">{{ specialTurn.description }}</div>
+  <div class="continue">
+    @if(versus.length > 1){
+    <div class="versus-container">
+      <div class="opponent">
+        <h2>{{ versus[0].nickName }}</h2>
+        @if(inBattle && battleTurn === 0 && versus[0].result === 0){
+        <app-dice-roller
+          (eventRoll)="setResultVersus($event, 0)"
+        ></app-dice-roller>
+        }@else if(versus[0].result > 0){
+        <span>{{ versus[0].result }}</span>
+        }
+      </div>
+      <div class="versus">
+        <h1>VS</h1>
+      </div>
+      <div class="opponent">
+        <h2>{{ versus[1].nickName }}</h2>
+        @if(inBattle && battleTurn === 1 && versus[1].result === 0){
+        <app-dice-roller
+          (eventRoll)="setResultFinalBattle($event, 1)"
+        ></app-dice-roller>
+        }@else if(versus[1].result > 1){
+        <span>{{ versus[1].result }}</span>
+        }
+      </div>
+    </div>
+    }
+
+    <div class="continue">
+      <button (click)="inBattle = true" [disabled]="versus.length != 2">
+        Comenzar Batalla
+      </button>
+    </div>
+
+    <!-- <app-dice-roller (eventRoll)="setResultRetroZen($event)"></app-dice-roller> -->
+  </div>
+</dialog>
+
+<dialog close id="dialog_settings">
+  <app-settings (eventStartGame)="init($event)"></app-settings>
+</dialog>

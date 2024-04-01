@@ -1,0 +1,44 @@
+header {
+  background-color: #333;
+  color: white;
+  padding: 0px;
+  text-align: center;
+}
+
+aside {
+  background-color: #555;
+  color: white;
+  width: 100px;
+  height: 100vh;
+  float: left;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin-bottom: 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  margin-left: 220px;
+  padding: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

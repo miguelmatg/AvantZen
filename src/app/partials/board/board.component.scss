@@ -1,0 +1,156 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 10 columnas de tamaño igual */
+  grid-template-rows: repeat(5, 1fr); /* 5 filas de tamaño igual */
+  width: 90%; /* Ancho del tablero (90% del contenedor principal) */
+  margin: auto; /* Centrar el tablero horizontalmente */
+  gap: 1px; /* Espacio entre las casillas */
+  .board-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em; /* Tamaño de fuente */
+    width: 100%;
+    height: 100%;
+    gap: 1px;
+    box-sizing: border-box;
+    border: solid 5px;
+    aspect-ratio: 1;
+
+    /* Casilla de inicio - Blanco */
+    &.Start {
+      background-color: #fbfcfc;
+      border-color: #b3b6b7;
+    }
+
+    /* Casilla normal - Azul */
+    &.Normal {
+      background-color: #d4e6f1;
+      border-color: #1f618d;
+    }
+
+    /* Casilla AvantZen Verde*/
+    &.AvantZen {
+      background-color: #d5f5e3;
+      border-color: #239b56;
+    }
+
+    /* Casilla BatallZen - Naranja */
+    &.BatallZen {
+      background-color: #fdebd0;
+      border-color: #b9770e;
+    }
+
+    /* Casilla RetroZen - Rojo*/
+    &.RetroZen {
+      background-color: #f2d7d5;
+      border-color: #922b21;
+    }
+
+    /* Casilla SuertZen - Morado*/
+    &.SuertZen {
+      background-color: #e8daef;
+      border-color: #76448a;
+    }
+
+    /* Casilla de fin */
+    &.Finish {
+      background-color: #d5d8dc;
+      border-color: #212f3d;
+    }
+  }
+}
+
+.player-piece {
+  width: 20px; /* Ancho de la ficha */
+  height: 20px; /* Altura de la ficha */
+  border-radius: 50%; /* Forma de la ficha circular */
+  position: absolute; /* Posición absoluta para colocar la ficha en el tablero */
+  /* Ajusta las coordenadas 'top' y 'left' según la posición deseada en el tablero */
+  top: 9.23828125;
+  left: 91.1328125;
+  /* Z-index para que la ficha esté por encima del tablero */
+  z-index: 1;
+  animation: ease-in-out;
+  background-color: #000; /* Color de la ficha (rojo en este caso) */
+  box-sizing: border-box;
+  border: solid 1px;
+
+  &.onTurn {
+    animation: onTurn 1s infinite ease-in-out;
+  }
+}
+
+#countdown-container {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: #17202a;
+  z-index: 2;
+
+  overflow: hidden;
+
+  display: none;
+
+  .countdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 240px;
+    overflow: hidden;
+  }
+
+  .startingGameTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    overflow: hidden;
+  }
+}
+
+.versus-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .opponent {
+    text-align: center;
+    margin: 0 20px;
+  }
+
+  .opponent h2 {
+    font-size: 24px;
+  }
+
+  .opponent .name {
+    font-weight: bold;
+  }
+
+  .versus h1 {
+    font-size: 36px;
+    margin: 0;
+  }
+}
+
+#dialog_settings {
+  background-color: transparent;
+}
+
+// Animaciones
+@keyframes onTurn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

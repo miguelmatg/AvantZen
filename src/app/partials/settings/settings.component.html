@@ -1,0 +1,111 @@
+<div class="game-settings">
+  <div class="setting">
+    <label for="turnDuration">Tiempo máximo por turno:</label>
+    <input
+      type="number"
+      id="turnDuration"
+      [(ngModel)]="settings.turnDuration"
+    />
+  </div>
+
+  <div class="setting">
+    <label for="totalSquares">Total de casillas:</label>
+    <input
+      type="number"
+      id="totalSquares"
+      [(ngModel)]="settings.totalSquares"
+    />
+  </div>
+
+  <div class="setting">
+    <label for="specialSquares">Total de casillas especiales:</label>
+    <input
+      type="number"
+      id="specialSquares"
+      [(ngModel)]="settings.specialSquares"
+    />
+  </div>
+
+  <div class="setting-inline">
+    <label for="isPrivate">Partida privada:</label>
+    <input type="checkbox" id="isPrivate" [(ngModel)]="settings.isPrivate" />
+  </div>
+
+  @if (settings.isPrivate) {
+  <div class="setting">
+    <label for="password">Contraseña de la partida:</label>
+    <input type="password" id="password" [(ngModel)]="settings.password" />
+  </div>
+  }
+
+  <div class="player-settings">
+    <div class="new-player">
+      <div class="setting-inline">
+        <label for="isAI">¿Es IA?:</label>
+        <input type="checkbox" id="isAI" [(ngModel)]="newPlayer.IA" />
+      </div>
+
+      <div class="setting">
+        <label for="nickname">Nombre del Jugador:</label>
+        <input
+          type="text"
+          id="nickname"
+          [(ngModel)]="newPlayer.nickName"
+          placeholder="Nombre del jugador"
+          autocomplete="off"
+        />
+        <small>*El nick debe de ser único</small>
+      </div>
+
+      <div class="setting-inline">
+        <label for="pieceColor">Color de la Pieza:</label>
+        <select
+          name="pieceColorSelect"
+          id="pieceColorSelect"
+          [(ngModel)]="newPlayer.pieceColor"
+          [ngStyle]="{ background: newPlayer.pieceColor }"
+        >
+          @for (color of colors; track $index) {
+          <option
+            [value]="color"
+            [ngStyle]="{ 'background-color': color }"
+          ></option>
+          }
+        </select>
+      </div>
+
+      <button (click)="addPlayer()" [disabled]="players.length >= 10">
+        Añadir Jugador
+      </button>
+    </div>
+
+    <div class="player-list">
+      <label>Jugadores Agregados:</label>
+      <small>*Máximo 10 gugadores</small>
+      <ul>
+        @for (player of players; track $index) {
+        <li>
+          <span
+            class="circle"
+            [ngStyle]="{ 
+              'background': player.pieceColor + 'CC',
+              'border-color': player.pieceColor,}"
+          ></span>
+          <span> {{ player.nickName }} </span>
+          <span class="icon-trash" (click)="delPlayer(player.nickName)"></span>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="start-game-btn-container">
+    <button
+      class="start-game-btn"
+      (click)="startGame()"
+      [disabled]="players.length <= 1"
+    >
+      ¡Iniciar Juego!
+    </button>
+  </div>
+</div>

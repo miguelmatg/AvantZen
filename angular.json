@@ -81,7 +81,11 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://miguelmatg.github.io/AvantZen/",
+            "dir": "dist/avant-zen/browser"
+          }
         }
       }
     }
